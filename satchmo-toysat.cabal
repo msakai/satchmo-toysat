@@ -2,7 +2,7 @@
 --  http://haskell.org/cabal/users-guide/
 
 name:                satchmo-toysat
-version:             0.2.0.0
+version:             0.2.1.0
 synopsis:            toysat driver as backend for satchmo
 description:         toysat driver as backend for satchmo
 homepage:            https://github.com/msakai/satchmo-toysat
