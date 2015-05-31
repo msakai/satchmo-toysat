@@ -1,4 +1,4 @@
-{-# LANGUAGE ScopedTypeVariables, TypeFamilies, MultiParamTypeClasses, TypeSynonymInstances #-}
+{-# LANGUAGE ScopedTypeVariables, TypeFamilies, MultiParamTypeClasses, TypeSynonymInstances, CPP #-}
 {-# OPTIONS_GHC -Wall #-}
 --------------------------------------------------------------------
 -- |
@@ -6,7 +6,7 @@
 -- License   :  BSD3
 -- Maintainer:  Masahiro Sakai <masahiro.sakai@gmail.com>
 -- Stability :  experimental
--- Portability: portable
+-- Portability: non-portable (ScopedTypeVariables, TypeFamilies, MultiParamTypeClasses, TypeSynonymInstances, CPP)
 --
 --------------------------------------------------------------------
 
@@ -105,8 +105,13 @@ solve action = do
     s <- API.newSolver
     hPutStrLn stderr $ "start producing CNF"
     SAT decoder <- unSAT action s
+#if MIN_VERSION_toysolver(0,3,0)
+    v <- API.getNVars s
+    c <- API.getNConstraints s
+#else
     v <- API.nVars s
     c <- API.nConstraints s
+#endif
     hPutStrLn stderr 
         $ unwords [ "CNF finished", "vars", show v, "clauses", show c ]
     hPutStrLn stderr $ "starting solver"
