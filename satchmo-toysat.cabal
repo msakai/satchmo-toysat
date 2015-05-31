@@ -23,7 +23,7 @@ source-repository head
 library
   exposed-modules:     Satchmo.SAT.Toysat
   build-depends:
-    base >=4.5 && <4.9,
+    base >=4.6 && <4.9,
     array >= 0.4 && < 0.6,
     containers >= 0.5.0.0 && < 0.6,
     satchmo >=2.8.1 && <2.9,
