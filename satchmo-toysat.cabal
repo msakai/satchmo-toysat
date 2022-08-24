@@ -4,7 +4,7 @@
 name:                satchmo-toysat
 version:             0.2.2.0
 synopsis:            toysat driver as backend for satchmo
-description:         toysat driver as backend for satchmo
+description:         This package allows <https://hackage.haskell.org/package/satchmo satchmo> to use a SAT solver implementation of <https://hackage.haskell.org/package/toysolver toysolver> package. The SAT solver implementation is written in Haskell and is reasonably fast.
 homepage:            https://github.com/msakai/satchmo-toysat
 license:             BSD3
 license-file:        LICENSE
