@@ -1,0 +1,48 @@
+on: [push, pull_request]
+name: build
+jobs:
+  stack:
+    name: stack
+    runs-on: ${{ matrix.os }}
+    env:
+      STACK_YAML: ${{ matrix.stack_yaml }}
+    strategy:
+      fail-fast: false
+      matrix:
+        ghc: ['7.8.4', '9.0.2']
+        include:
+          - ghc: '7.8.4'
+            os: 'ubuntu-18.04'
+            stack-version: '1.9.1'
+            stack_yaml: 'stack_old_env.yaml'
+            flags: ''
+          - ghc: '9.0.2'
+            os: 'ubuntu-latest'
+            stack-version: 'latest'
+            stack_yaml: 'stack.yaml'
+            flags: ''
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: haskell/actions/setup@v1
+        name: Setup Haskell
+        with:
+          ghc-version: ${{ matrix.ghc }}
+          enable-stack: true
+          stack-version: ${{ matrix.stack-version }}
+
+      - uses: actions/cache@v1
+        name: Cache ~/.stack
+        with:
+          path: ~/.stack
+          key: ${{ runner.os }}-${{ matrix.ghc }}-stack
+
+      - name: Build
+        run: |
+          echo "system-ghc: true" >> $STACK_YAML
+          stack build --test --no-run-tests --bench --no-run-benchmarks ${{ matrix.flags }}
+      - name: Test
+        run: stack test ${{ matrix.flags }}
+
+      - name: Create source tarball
+        run: stack sdist
