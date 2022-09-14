@@ -1,6 +1,7 @@
 satchmo-toysat
 ==============
 
+[![Build status](https://github.com/msakai/satchmo-toysat/actions/workflows/build.yaml/badge.svg)](https://github.com/msakai/satchmo-toysat/actions/workflows/build.yaml)
 [![Build Status](https://secure.travis-ci.org/msakai/satchmo-toysat.png?branch=master)](http://travis-ci.org/msakai/satchmo-toysat)
 [![Hackage](https://img.shields.io/hackage/v/satchmo-toysat.svg)](https://hackage.haskell.org/package/satchmo-toysat)
 [![Hackage Deps](https://img.shields.io/hackage-deps/v/satchmo-toysat.svg)](https://packdeps.haskellers.com/feed?needle=satchmo-toysat)
