@@ -13,7 +13,7 @@ maintainer:          masahiro.sakai@gmail.com
 copyright:           (c) 2014 Masahiro Sakai
 category:            Logic, Algorithms
 build-type:          Simple
-extra-source-files:  README.md, .travis.yml
+extra-source-files:  README.md
 cabal-version:       >=1.10
 
 source-repository head
