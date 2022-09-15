@@ -9,17 +9,37 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ghc: ['7.8.4', '9.0.2']
+        ghc: ['7.8.4', '8.8.4', '8.10.7', '9.0.2', '9.2.4']
         include:
           - ghc: '7.8.4'
             os: 'ubuntu-18.04'
             stack-version: '1.9.1'
             stack_yaml: 'stack_old_env.yaml'
+            stack_resolver: 'lts-2.22'
+            flags: ''
+          - ghc: '8.8.4'
+            os: 'ubuntu-latest'
+            stack-version: 'latest'
+            stack_yaml: 'stack.yaml'
+            stack_resolver: 'lts-16.31'
+            flags: ''
+          - ghc: '8.10.7'
+            os: 'ubuntu-latest'
+            stack-version: 'latest'
+            stack_yaml: 'stack.yaml'
+            stack_resolver: 'lts-18.28'
             flags: ''
           - ghc: '9.0.2'
             os: 'ubuntu-latest'
             stack-version: 'latest'
             stack_yaml: 'stack.yaml'
+            stack_resolver: 'lts-19.20'
+            flags: ''
+          - ghc: '9.2.4'
+            os: 'ubuntu-latest'
+            stack-version: 'latest'
+            stack_yaml: 'stack.yaml'
+            stack_resolver: 'nightly-2022-09-14'
             flags: ''
     steps:
       - uses: actions/checkout@v2
@@ -35,10 +55,11 @@ jobs:
         name: Cache ~/.stack
         with:
           path: ~/.stack
-          key: ${{ runner.os }}-${{ matrix.ghc }}-stack
+          key: ${{ runner.os }}-${{ matrix.ghc }}-stack-${{ matrix.stack_resolver }}
 
       - name: Build
         run: |
+          sed -i -e "s/^resolver:.*$/resolver: ${{ matrix.stack_resolver }}/" $STACK_YAML
           echo "system-ghc: true" >> $STACK_YAML
           stack build --test --no-run-tests --bench --no-run-benchmarks ${{ matrix.flags }}
       - name: Test
